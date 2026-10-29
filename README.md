@@ -2,6 +2,12 @@
 
 FitFlow is a web platform for running a fitness club, built with **Django**. Members can sign up, pick a membership plan, enroll in courses and book sessions from a weekly schedule. Gym staff manage everything (members, coaches, courses, sessions, clubs and equipment) from a customized Django admin dashboard. The interface is in French.
 
+## Demo
+
+[![FitFlow demo video](docs/demo-thumbnail.jpg)](docs/demo.mp4)
+
+A 40-second walkthrough of the member side of the platform: landing page, coaches and events, sign-in and registration, member portal, course catalog, session booking, membership checkout, password change and the weekly schedule. Click the image to watch [docs/demo.mp4](docs/demo.mp4).
+
 ## Features
 
 ### For members
