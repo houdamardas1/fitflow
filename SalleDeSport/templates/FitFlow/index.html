@@ -1,0 +1,187 @@
+{% extends "FitFlow/base.html" %}
+
+{% block title %}{{ membre.prenom }} {{ membre.nom }}{% endblock %}
+
+{% block content %}
+<div>
+    <!--------main-content------------->        
+    <div class="main-content">
+        <div class="row">           
+        <div class="col-md-12">
+        <div class="table-wrapper">
+
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
+              <h2 class="ml-lg-2">Informations Personnelles</h2>
+            </div>
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
+              <a href="{% url 'SalleDeSport:profile' membre.id %}" class="btn btn-success">
+              <span class="material-symbols-outlined" style="color: black">edit</span> 
+              <span style="color: black">Modifier mes informations</span></a>
+            </div>
+          </div>
+        </div>
+
+
+
+        <table class="table table-striped table-hover">
+          <tbody>
+            <tr>
+                <td>Nom</td>
+                <td>{{ membre.nom }}</td>
+            </tr>
+
+            <tr>
+                <td>Prénom</td>
+                <td>{{ membre.prenom }}</td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td>{{ membre.email }}</td>
+            </tr>
+
+            <tr>
+                <td>Téléphone</td>
+                <td>{{ membre.tel }}</td>
+            </tr>
+          </tbody>
+      
+        </table>
+        <div class="clearfix">
+        
+        </div>
+
+        <!-- COURS INSCRITS -->
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
+              <h2 class="ml-lg-2">Mes Cours</h2>
+            </div>
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
+              <a href="{% url 'SalleDeSport:courses' membre.id %}" class="btn btn-success">
+              <i class="material-icons">&#xE147;</i> <span style="color: black">S'inscrire à un cours</span></a>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Cours</th>
+                    <th>Description</th>
+                    <th>Activité du Cours</th>
+                    <th>Instructeur</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for x in membre.coursInscrits.all %}
+
+                <tr>
+                    <td><a href="{% url 'SalleDeSport:course' membre.id x.id %}">{{ x.nomCours}}</a></td>
+                    <td>{{ x.description }}</td>
+                    <td>{{ x.activite }}</td>
+                    <td>{{ x.instructeur }}</td>
+                </tr>    
+
+                {% empty %}
+                    <p>Vous n'êtes inscrit à aucun cours.</p><br>
+                {% endfor %}
+
+            </tbody>
+      
+        </table>
+        <div class="clearfix">
+        </div>
+
+        <!-- COURS RESERVÉS -->
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
+              <h2 class="ml-lg-2">Mes Réservations</h2>
+            </div>
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
+              <a href="{% url 'SalleDeSport:list_seances' membre.id %}" class="btn btn-success">
+              <i class="material-icons">&#xE147;</i> <span style="color: black">Réserver une séance</span></a>
+              
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Cours</th>
+              <th>Heure Début</th>
+              <th>Jour</th> 
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {% for x in membre.seancesReserves.all %}
+
+            <tr>
+                <td>{{ x.cours}}</td>
+                <td>{{ x.heureDebut }}</td>
+                <td>{{ x.get_jour_display }}</td>
+            </tr>    
+
+            {% empty %}
+                <p>Vous n'avez réservés aucune séance.</p><br>
+
+            {% endfor %}
+
+          </tbody>
+      
+        </table>
+
+        <!-- Abonnement -->
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
+              <h2 class="ml-lg-2">Mon abonnement</h2>
+            </div>
+            <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
+              
+              
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Nom de l'abonnenment</th>
+              <th>Description</th>
+              <th>Status</th> 
+              <th>Date de renouvellement</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            
+            <tr>
+                
+                {% if membre.typeAbon is not None %}
+                <td><a href="{% url 'SalleDeSport:info_abonnement' membre.id membre.typeAbon.id %}">{{ membre.typeAbon.nomAbon }}</a></td>
+                <td>{{ membre.typeAbon.description }}</td>
+                <td>Payé</td>
+                <td>{{ membre.dateRenouvellement }}</td>
+                {% endif %}
+            </tr>    
+
+            
+
+          </tbody>
+      
+        </table>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
